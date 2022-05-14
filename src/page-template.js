@@ -1,11 +1,99 @@
 
 
-const generateEmployeeCards (name, id, email, officeNumber, github, school) => {
-    
+const generateManagerCard = managerArr => {
+    return `
+    ${managerArr.map(({name, id, email, officeNumber}) => {
+        return `
+        <div class="card col-3 m-3">
+            <h2 class="card-header bg-warning">${name}</h2>
+            <h3></h3>
+            <div class="card-body">
+                <h3 class="card-title">
+                    Manager
+                </h3>
+                <p class="card-text">
+                    Id: ${id}
+                </p>
+                <p class="card-text">
+                    Email: <a href="mailto:${email}">${email}
+                <p>
+                <p class="card-text">
+                    Office Number: ${officeNumber}
+                <p>
+                
+            </div>
+        </div>
+        `
+    })}
+    `
+};
+
+const generateEngineerCard = engineerArr => {
+    if(!engineerArr) {
+        return ``;
+    }
+    else {
+        return `
+        ${engineerArr.map(({name, id, email, github}) => {
+            return `
+            <div class="card col-3 m-3">
+                <h2 class="card-header bg-warning">${name}</h2>
+                <h3></h3>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Engineer
+                    </h3>
+                    <p class="card-text">
+                        Id: ${id}
+                    </p>
+                    <p class="card-text">
+                        Email: <a href="mailto:${email}">${email}
+                    <p>
+                    <p class="card-text">
+                        Github: <a href="https://github.com/${github}" target=_blank>${github}</a>
+                    <p>
+                </div>
+            </div>
+            `
+        })}
+        `
+    }
+}
+const generateInternCard = internArr => {
+    if(!internArr) {
+        return ``;
+    }
+    else {
+        return `
+        ${engineerArr.map(({name, id, email, school}) => {
+            return `
+            <div class="card col-3 m-3">
+                <h2 class="card-header bg-warning">${name}</h2>
+                <h3></h3>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        Intern
+                    </h3>
+                    <p class="card-text">
+                        Id: ${id}
+                    </p>
+                    <p class="card-text">
+                        Email: <a href="mailto:${email}">${email}
+                    <p>
+                    <p class="card-text">
+                        School: <a href="https://github.com/${github}" target=_blank>${github}</a>
+                    <p>
+                </div>
+            </div>
+            `
+        })}
+        `
+    }
 }
 
 
 module.exports = templateData => {
+    const {manager, engineer, intern} = templateData
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +113,13 @@ module.exports = templateData => {
         My Team
     </header>
     <section>
-        <div id="employee-cards" class="container"></div>
+        <div id="employee-cards" class="container">
+            <div class="row">
+            ${generateManagerCard(manager)}
+            ${generateEngineerCard(engineer)}
+            ${generateInternCard(intern)}
+            </div>
+        </div>
     </section>
 </body>  
   `
