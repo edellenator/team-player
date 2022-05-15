@@ -65,7 +65,7 @@ const generateInternCard = internArr => {
     }
     else {
         return `
-        ${engineerArr.map(({name, id, email, school}) => {
+        ${internArr.map(({name, id, email, school}) => {
             return `
             <div class="card col-3 m-3">
                 <h2 class="card-header bg-warning">${name}</h2>
@@ -81,7 +81,7 @@ const generateInternCard = internArr => {
                         Email: <a href="mailto:${email}">${email}
                     <p>
                     <p class="card-text">
-                        School: <a href="https://github.com/${github}" target=_blank>${github}</a>
+                        School: ${school}
                     <p>
                 </div>
             </div>
@@ -92,8 +92,8 @@ const generateInternCard = internArr => {
 }
 
 
-module.exports = templateData => {
-    const {manager, engineer, intern} = templateData
+module.exports = employeeData => {
+    const {manager, engineer, intern} = employeeData
     return `
 <!DOCTYPE html>
 <html lang="en">
