@@ -1,17 +1,27 @@
+// importing application dependencies
+
 const inquirer = require('inquirer');
+const fs = require('fs');
+
+// importing objects to generate new employees
+
 const Employee = require('./lib/Employee')
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
+
+// import html page template
 const generatePage = require('./src/page-template');
-const fs = require('fs');
 
 
-
+// function expression to take user input
 const employeePrompt = employeeData => {
+    // if employee data doesn't exist instantiate it as an array of objects
     if (!employeeData) {
         employeeData = 
             {
+                //each employee data object will hold objects 
+                // generated and stored by the user prompts
                 manager:[],
                 engineer:[],
                 intern:[]
@@ -19,11 +29,11 @@ const employeePrompt = employeeData => {
     }
     
     console.log(`
-    ---------------------------------
+    --------------------------------
 
-    Enter your manager's information
+    Enter the employee's information
 
-    ---------------------------------
+    --------------------------------
     `)
     return inquirer.prompt([
         {
@@ -83,6 +93,7 @@ const employeePrompt = employeeData => {
                 }
             }
         },
+        // This question only asked when 'Manager' is selected
         {
             type: 'input',
             name: 'officeNumber',
@@ -105,6 +116,7 @@ const employeePrompt = employeeData => {
                 }
             }
         },
+        // This question only asked when 'Engineer' is selected
         {
             type: 'input',
             name: 'github',
@@ -127,6 +139,7 @@ const employeePrompt = employeeData => {
                 }
             }
         },
+        // This question only asked when 'Intern' is selected
         {
             type: 'input',
             name: 'school',
@@ -156,23 +169,27 @@ const employeePrompt = employeeData => {
             default: false
         }
     ]).then(employeeRes => {
+        // push object array based on role selection
+
         if (employeeRes.role === 'Manager') {
-            
+            // Manager
             employeeData.manager.push(employeeRes);
             
 
         } else if (employeeRes.role === 'Engineer') {
-            
+            // Engineer
             employeeData.engineer.push(employeeRes);
             
 
         } else if (employeeRes.role === 'Intern') {
-          
+            // Intern
             employeeData.intern.push(employeeRes);
             
         }
         if (employeeRes.confirmAddEmployee) {
-
+            // Return to start of function if user selects to add additional employee
+            // Pass current employee data in to function
+            // to maintain object array generated from user
             return employeePrompt(employeeData);
 
         }
@@ -185,6 +202,8 @@ const employeePrompt = employeeData => {
     });
 };
 
+
+// basic fs function expression to write to a file
 const writeFile = fileContent => {
     return new Promise((resolve, reject) => {
         fs.writeFile('./dist/index.html', fileContent, err => {
@@ -204,6 +223,7 @@ const writeFile = fileContent => {
     });
 }
 
+// async function declarations
 employeePrompt()
     .then(employeeData => {
         return generatePage(employeeData);
