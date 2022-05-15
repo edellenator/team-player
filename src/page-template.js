@@ -1,21 +1,21 @@
 
 
-const generateManagerCard = managerArr => {
+const generateManagerCard = managers => {
     return `
-    ${managerArr.map(({name, id, email, officeNumber}) => {
+    ${managers.map(({role, name, id, email, officeNumber}) => {
         return `
         <div class="card col-3 m-3">
             <h2 class="card-header bg-warning">${name}</h2>
             <h3></h3>
             <div class="card-body">
                 <h3 class="card-title">
-                    Manager
+                    ${role}
                 </h3>
                 <p class="card-text">
                     Id: ${id}
                 </p>
                 <p class="card-text">
-                    Email: <a href="mailto:${email}">${email}
+                    Email: <a href="mailto:${email}">${email}</a>
                 <p>
                 <p class="card-text">
                     Office Number: ${officeNumber}
@@ -28,26 +28,26 @@ const generateManagerCard = managerArr => {
     `
 };
 
-const generateEngineerCard = engineerArr => {
-    if(!engineerArr) {
+const generateEngineerCard = engineers => {
+    if(!engineers) {
         return ``;
     }
     else {
         return `
-        ${engineerArr.map(({name, id, email, github}) => {
+        ${engineers.map(({role, name, id, email, github}) => {
             return `
             <div class="card col-3 m-3">
                 <h2 class="card-header bg-warning">${name}</h2>
                 <h3></h3>
                 <div class="card-body">
                     <h3 class="card-title">
-                        Engineer
+                        ${role}
                     </h3>
                     <p class="card-text">
                         Id: ${id}
                     </p>
                     <p class="card-text">
-                        Email: <a href="mailto:${email}">${email}
+                        Email: <a href="mailto:${email}">${email}</a>
                     <p>
                     <p class="card-text">
                         Github: <a href="https://github.com/${github}" target=_blank>${github}</a>
@@ -59,26 +59,26 @@ const generateEngineerCard = engineerArr => {
         `
     }
 }
-const generateInternCard = internArr => {
-    if(!internArr) {
+const generateInternCard = interns => {
+    if(!interns) {
         return ``;
     }
     else {
         return `
-        ${internArr.map(({name, id, email, school}) => {
+        ${interns.map(({role, name, id, email, school}) => {
             return `
             <div class="card col-3 m-3">
                 <h2 class="card-header bg-warning">${name}</h2>
                 <h3></h3>
                 <div class="card-body">
                     <h3 class="card-title">
-                        Intern
+                        ${role}
                     </h3>
                     <p class="card-text">
                         Id: ${id}
                     </p>
                     <p class="card-text">
-                        Email: <a href="mailto:${email}">${email}
+                        Email: <a href="mailto:${email}">${email}</a>
                     <p>
                     <p class="card-text">
                         School: ${school}
@@ -93,7 +93,6 @@ const generateInternCard = internArr => {
 
 
 module.exports = employeeData => {
-    const {manager, engineer, intern} = employeeData
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -115,12 +114,12 @@ module.exports = employeeData => {
     <section>
         <div id="employee-cards" class="container">
             <div class="row">
-            ${generateManagerCard(manager)}
-            ${generateEngineerCard(engineer)}
-            ${generateInternCard(intern)}
+            ${generateManagerCard(employeeData.manager)}
+            ${generateEngineerCard(employeeData.engineer)}
+            ${generateInternCard(employeeData.intern)}
             </div>
         </div>
     </section>
 </body>  
   `
-}
+};

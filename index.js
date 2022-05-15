@@ -9,13 +9,15 @@ const fs = require('fs');
 
 
 const employeePrompt = employeeData => {
-    employeeData = 
-        {
-            manager:[],
-            engineer:[],
-            intern:[]
-        };
-    console.log(employeeData.manager);
+    if (!employeeData) {
+        employeeData = 
+            {
+                manager:[],
+                engineer:[],
+                intern:[]
+            };
+    }
+    
     console.log(`
     ---------------------------------
 
@@ -153,19 +155,31 @@ const employeePrompt = employeeData => {
             message: 'Would you like to enter another Employee?',
             default: false
         }
-    ]).then(employeeInfo => {
-        if (employeeInfo.role === 'Manager') {
-            employeeData.manager.push(employeeInfo);
-        } else if (employeeInfo.role === 'Engineer') {
-            employeeData.engineer.push(employeeInfo);
-        } else if (employeeInfo.role === 'Intern') {
-            employeeData.engineer.push(employeeInfo);
+    ]).then(employeeRes => {
+        if (employeeRes.role === 'Manager') {
+            
+            employeeData.manager.push(employeeRes);
+            
+
+        } else if (employeeRes.role === 'Engineer') {
+            
+            employeeData.engineer.push(employeeRes);
+            
+
+        } else if (employeeRes.role === 'Intern') {
+          
+            employeeData.intern.push(employeeRes);
+            
         }
-        if (employeeInfo.confirmAddEmployee) {
+        if (employeeRes.confirmAddEmployee) {
+
             return employeePrompt(employeeData);
+
         }
         else {
+
             return employeeData;
+
         }
 
     });
